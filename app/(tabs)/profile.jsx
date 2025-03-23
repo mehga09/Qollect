@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { signOut } from 'firebase/auth';
+import { useTheme } from '../../context/ThemeContext';
 
 export default function ProfileScreen() {
     const router = useRouter();
@@ -15,6 +16,7 @@ export default function ProfileScreen() {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [users, setUsers] = useState([]); // For admin view
+    const { isDarkMode } = useTheme();
 
     useEffect(() => {
         let mounted = true;
@@ -284,6 +286,22 @@ export default function ProfileScreen() {
                 </View>
             )}
 
+            {userData?.isAdmin && (
+                <TouchableOpacity
+                    style={[styles.menuItem, isDarkMode && styles.menuItemDark]}
+                    onPress={() => router.push('/admin/MaterialApprovals')}
+                >
+                    <View style={styles.menuItemContent}>
+                        <Ionicons name="checkmark-circle" size={24} color={Colors.PRIMARY} />
+                        <Text style={[styles.menuItemText, isDarkMode && styles.menuItemTextDark]}>
+                            Material Approvals
+                        </Text>
+                        {/* You can add a badge here to show pending count */}
+                    </View>
+                    <Ionicons name="chevron-forward" size={24} color="#666" />
+                </TouchableOpacity>
+            )}
+
             {/* Sign Out Button */}
             <TouchableOpacity 
                 style={styles.signOutButton}
@@ -447,5 +465,28 @@ const styles = StyleSheet.create({
     },
     deleteButton: {
         marginLeft: 10,
+    },
+    menuItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+    },
+    menuItemDark: {
+        borderBottomColor: '#2c2c2e',
+    },
+    menuItemContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        flex: 1,
+    },
+    menuItemText: {
+        fontSize: 16,
+        color: '#333',
+        marginLeft: 10,
+    },
+    menuItemTextDark: {
+        color: '#fff',
     },
 }); 

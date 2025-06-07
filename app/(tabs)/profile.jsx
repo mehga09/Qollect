@@ -349,6 +349,22 @@ export default function ProfileScreen() {
                 </TouchableOpacity>
             )}
 
+            {userData?.isAdmin && (
+  <TouchableOpacity
+    style={[styles.menuItem, isDarkMode && styles.menuItemDark]}
+    onPress={() => router.push('/admin/MaterialApprovals')}
+  >
+    <View style={styles.menuItemContent}>
+      <Ionicons name="checkmark-circle" size={24} color={Colors.PRIMARY} />
+      <Text style={[styles.menuItemText, isDarkMode && styles.menuItemTextDark]}>
+        Material Approvals
+      </Text>
+      {/* You can add a badge here to show pending count */}
+    </View>
+    <Ionicons name="chevron-forward" size={24} color="#666" />
+  </TouchableOpacity>
+)}
+
             <TouchableOpacity 
                 style={styles.signOutButton}
                 onPress={handleSignOut}
@@ -616,26 +632,48 @@ const styles = StyleSheet.create({
         color: '#333',
         marginLeft: 10,
     },
-    menuItemTextDark: {
-        color: '#fff',
-    },
-    emptyListContent: {
-        flexGrow: 1,
-        justifyContent: 'center',
-    },
-    emptyContainer: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 20,
-    },
-    emptyText: {
-        fontSize: 16,
-        color: '#666',
-        marginTop: 10,
-        textAlign: 'center',
-    },
-    emptyTextDark: {
-        color: '#999',
-    },
+menuItem: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  padding: 15,
+  borderBottomWidth: 1,
+  borderBottomColor: '#eee',
+},
+menuItemDark: {
+  borderBottomColor: '#2c2c2e',
+},
+menuItemContent: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  flex: 1,
+},
+menuItemText: {
+  fontSize: 16,
+  color: '#333',
+  marginLeft: 10,
+},
+menuItemTextDark: {
+  color: '#fff',
+},
+
+emptyListContent: {
+  flexGrow: 1,
+  justifyContent: 'center',
+},
+emptyContainer: {
+  flex: 1,
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: 20,
+},
+emptyText: {
+  fontSize: 16,
+  color: '#666',
+  marginTop: 10,
+  textAlign: 'center',
+},
+emptyTextDark: {
+  color: '#999',
+},
+
 }); 
